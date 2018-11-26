@@ -1,37 +1,69 @@
 %{
 	#include <stdio.h>
-	int yyerror(const char* err);
-
+//	int yyerror(const char* err);
+	int yylex();
 %}
 
-%token G
-%token INT
-%token X
-%token Y
-%token Z
+%union{
+	int ival;
+	float fval;
+}
+
 %token END
-%token ZERO
-%token EOL
+%token END_STATEMENT
+%token POINT
+%token LINE
+%token CIRCLE
+%token RECTANGLE
+%token SET_COLOR
+%token <ival> INT
+%token <fval> FLOAT
 
 %%
 
-program:	list_of_expr
+program:	statement_list
+       		END
 	;
 
-list_of_expr:	expr
-	|	list_of_expr expr
+statement_list:	
+	|	statement
+	|	statement_list
 	;
 
-expr:		G INT X INT Y INT Z INT EOL
-	|	ZERO EOL
+statement:		
+	|	line
+	|	point
+	|	circle
+	|	rectangle
+	| 	set_color
 	|	END
 	;
+
+line:
+    |	LINE INT INT INT INT END_STATEMENT	     {  }
+    ;
+
+point: 
+     |   POINT INT INT END_STATEMENT		     {  }
+     ;
+
+circle:
+      |	  CIRCLE INT INT INT END_STATEMENT	     {  }
+      ;
+
+rectangle:
+	 |   RECTANGLE INT INT INT INT END_STATEMENT {  }
+	 ;
+
+set_color:
+	 |   SET_COLOR INT INT INT END_STATEMENT     {  }
+	 ;
 
 %%
 
 int main(int argc, char** argv){
 	yyparse();
 }
-int yyerror(const char* err){
-	printf("%s\n", err);
-}
+//int yyerror(const char* err){
+//	printf("%s\n", err);
+//}
