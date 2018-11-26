@@ -1,6 +1,7 @@
 %{
 	#include <stdio.h>
 	int yyerror(const char* err);
+
 %}
 
 %token G

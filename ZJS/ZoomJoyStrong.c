@@ -1,4 +1,4 @@
-#include "zoomjoystrong.h"
+#include "ZoomJoyStrong.h"
 #include <math.h>
 #include <SDL2/SDL.h>
 
